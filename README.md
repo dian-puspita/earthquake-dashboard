@@ -8,7 +8,7 @@
 
 ---
 
-## 📌 Fitur Utama
+## Fitur Utama
 
 ✅ Tabel ringkasan probabilitas dan magnitudo per pulau
 ✅ Grafik bar interaktif untuk probabilitas model dan historis
@@ -18,7 +18,7 @@
 
 ---
 
-## 📂 Struktur Proyek
+## Struktur Proyek
 
 ```
 earthquake-dashboard/
@@ -35,12 +35,12 @@ earthquake-dashboard/
 
 ---
 
-## 🚀 Cara Menjalankan
+## Cara Menjalankan
 
 ### 1. Clone repositori
 
 ```bash
-git clone https://github.com/username/earthquake-dashboard.git
+git clone https://github.com/dian-puspita/earthquake-dashboard.git
 cd earthquake-dashboard
 ```
 
@@ -82,7 +82,7 @@ Berisi kolom:
 
 ---
 
-## 📍 Visualisasi Peta
+## Visualisasi Peta
 
 * Peta menggunakan **Folium** (leaflet.js).
 * Setiap pulau diberi:
@@ -94,7 +94,7 @@ Berisi kolom:
 
 ---
 
-## 🛠️ Ketergantungan
+## Ketergantungan
 
 | Library            | Fungsi                                       |
 | ------------------ | -------------------------------------------- |
@@ -106,7 +106,7 @@ Berisi kolom:
 
 ---
 
-## 🔒 Lisensi
+## Lisensi
 
 Proyek ini untuk keperluan edukasi dan penelitian. Silakan gunakan, modifikasi, dan kembangkan sesuai kebutuhan.
 
