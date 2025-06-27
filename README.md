@@ -66,7 +66,7 @@ streamlit run app.py
 
 ---
 
-## 📈 Tentang Dataset
+## Tentang Dataset
 
 File CSV yang digunakan:
 `outputs/probabilitas_dan_prediksi_magnitudo_per_pulau.csv`
