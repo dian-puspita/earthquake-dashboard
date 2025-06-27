@@ -8,24 +8,27 @@ from branca.element import MacroElement
 from jinja2 import Template
 
 # Konfigurasi halaman
-st.set_page_config(page_title="Dashboard Gempa Indonesia", layout="wide")
+st.set_page_config(page_title="Dashboard Gempa Indonesia", layout="centered")
 
 # Judul
-st.title("🌋 Dashboard Risiko Gempa di Indonesia per Pulau")
+st.title("\U0001F30B Dashboard Risiko Gempa di Indonesia per Pulau")
 
 # Load data hasil
 df = pd.read_csv('outputs/probabilitas_dan_prediksi_magnitudo_per_pulau.csv')
 
 # Sidebar: Filter Pulau
-selected_islands = st.sidebar.multiselect(
-    "Pilih pulau yang ingin ditampilkan:",
-    df['island'].unique(),
-    default=df['island'].unique()
-)
+with st.sidebar:
+    st.markdown("## \\U0001F4CD Filter")
+    selected_islands = st.multiselect(
+        "Pilih pulau:",
+        df['island'].unique(),
+        default=df['island'].unique()
+    )
+
 filtered_df = df[df['island'].isin(selected_islands)]
 
 # TABEL HASIL
-st.subheader("📊 Ringkasan Probabilitas & Magnitudo per Pulau")
+st.subheader("\U0001F4CA Ringkasan Probabilitas & Magnitudo per Pulau")
 st.dataframe(
     filtered_df.style.format({
         'probability_model (%)': '{:.2f}%',
@@ -37,26 +40,24 @@ st.dataframe(
     use_container_width=True
 )
 
-# GRAFIK PROBABILITAS
-col1, col2 = st.columns(2)
-with col1:
-    st.markdown("### 🔮 Probabilitas Model")
-    fig_model = px.bar(filtered_df.sort_values('probability_model (%)', ascending=True),
-                       x='probability_model (%)', y='island',
-                       orientation='h', color='probability_model (%)',
-                       color_continuous_scale='Reds')
-    st.plotly_chart(fig_model, use_container_width=True)
+# GRAFIK PROBABILITAS MODEL
+st.markdown("### \\U0001F52E Probabilitas Model")
+fig_model = px.bar(filtered_df.sort_values('probability_model (%)', ascending=True),
+                   x='probability_model (%)', y='island',
+                   orientation='h', color='probability_model (%)',
+                   color_continuous_scale='Reds')
+st.plotly_chart(fig_model, use_container_width=True)
 
-with col2:
-    st.markdown("### 🧾 Probabilitas Historis")
-    fig_hist = px.bar(filtered_df.sort_values('probability_historis (%)', ascending=True),
-                      x='probability_historis (%)', y='island',
-                      orientation='h', color='probability_historis (%)',
-                      color_continuous_scale='Blues')
-    st.plotly_chart(fig_hist, use_container_width=True)
+# GRAFIK PROBABILITAS HISTORIS
+st.markdown("### \\U0001F9FE Probabilitas Historis")
+fig_hist = px.bar(filtered_df.sort_values('probability_historis (%)', ascending=True),
+                  x='probability_historis (%)', y='island',
+                  orientation='h', color='probability_historis (%)',
+                  color_continuous_scale='Blues')
+st.plotly_chart(fig_hist, use_container_width=True)
 
 # GRAFIK MAGNITUDO
-st.markdown("### 📈 Rata-Rata Magnitudo: Prediksi vs Historis")
+st.markdown("### \\U0001F4C8 Rata-Rata Magnitudo: Prediksi vs Historis")
 fig_mag = px.bar(filtered_df,
                  x='island',
                  y=['avg_predicted_mag', 'avg_mag'],
@@ -66,21 +67,14 @@ fig_mag = px.bar(filtered_df,
 st.plotly_chart(fig_mag, use_container_width=True)
 
 # PETA INTERAKTIF
-st.subheader("🗺️ Peta Interaktif Risiko Gempa per Pulau")
+st.subheader("\U0001F5FA\ufe0f Peta Interaktif Risiko Gempa per Pulau")
 
-# Koordinat tengah tiap pulau
 island_coords = {
-    'Sumatera': [-0.5, 102],
-    'Jawa': [-7.0, 111],
-    'Bali': [-8.34, 115.09],
-    'Nusa Tenggara': [-8.6, 119],
-    'Kalimantan': [0.5, 114],
-    'Sulawesi': [-1.5, 121.5],
-    'Maluku': [-3.0, 129],
-    'Papua': [-4.0, 138.5],
+    'Sumatera': [-0.5, 102], 'Jawa': [-7.0, 111], 'Bali': [-8.34, 115.09],
+    'Nusa Tenggara': [-8.6, 119], 'Kalimantan': [0.5, 114],
+    'Sulawesi': [-1.5, 121.5], 'Maluku': [-3.0, 129], 'Papua': [-4.0, 138.5],
 }
 
-# Fungsi warna ikon
 def get_icon_color(prob):
     if prob >= 25:
         return "darkred"
@@ -88,13 +82,10 @@ def get_icon_color(prob):
         return "orange"
     elif prob >= 5:
         return "green"
-    else:
-        return "blue"
+    return "blue"
 
-# Inisialisasi peta
 m = folium.Map(location=[-2.5, 117], zoom_start=5, tiles="CartoDB positron")
 
-# Tambah marker dan label
 for _, row in filtered_df.iterrows():
     island = row['island']
     lat, lon = island_coords.get(island, [None, None])
@@ -103,7 +94,6 @@ for _, row in filtered_df.iterrows():
     prob = row['probability_model (%)']
     icon_color = get_icon_color(prob)
 
-    # Label angka %
     folium.Marker(
         location=[lat + 0.7, lon],
         icon=DivIcon(
@@ -120,7 +110,6 @@ for _, row in filtered_df.iterrows():
         )
     ).add_to(m)
 
-    # Popup
     popup_text = (
         f"<b>{island}</b><br>"
         f"Probabilitas Model: <b>{prob:.2f}%</b><br>"
@@ -130,14 +119,12 @@ for _, row in filtered_df.iterrows():
         f"Frekuensi Gempa: {int(row['freq'])}"
     )
 
-    # Ikon warna + popup
     folium.Marker(
         location=[lat, lon],
         icon=folium.Icon(icon='globe', prefix='fa', color=icon_color),
         popup=folium.Popup(popup_text, max_width=300)
     ).add_to(m)
 
-# Tambahkan Legenda
 legend_html = """
 <div style="
     position: fixed; 
@@ -150,11 +137,11 @@ legend_html = """
     font-size: 13px;
     color: black;
 ">
-    <b>🌍 Legenda Warna Ikon</b><br>
+    <b>\U0001F30D Legenda Warna Ikon</b><br>
     <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="darkred" /></svg> &nbsp; ≥ 25% (Sangat Tinggi)<br>
     <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="orange" /></svg> &nbsp; 15–24% (Tinggi)<br>
     <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="green" /></svg> &nbsp; 5–14% (Sedang)<br>
-    <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="blue" /></svg> &nbsp; &lt; 5% (Rendah)
+    <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="blue" /></svg> &nbsp; < 5% (Rendah)
 </div>
 """
 
@@ -169,9 +156,9 @@ class FloatLegend(MacroElement):
 
 m.get_root().add_child(FloatLegend(legend_html))
 
-# Tampilkan peta
-st_data = st_folium(m, width=800, height=500)
+st_data = st_folium(m, width=700, height=500)
 
 # Footer
+
 st.markdown("---")
-st.markdown("📍 Dibuat oleh: Delastrada Dian Puspita — 2025")
+st.markdown("\U0001F4CD Dibuat oleh: Delastrada Dian Puspita — 2025")
