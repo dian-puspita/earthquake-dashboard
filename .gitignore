@@ -1,1 +1,11 @@
+# Abaikan folder virtual environment
 venv/
+
+# File cache dan file sistem
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints
+
+# File sistem lain yang umum
+.DS_Store
+.env
