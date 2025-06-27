@@ -11,14 +11,14 @@ from jinja2 import Template
 st.set_page_config(page_title="Dashboard Gempa Indonesia", layout="centered")
 
 # Judul
-st.title("\U0001F30B Dashboard Risiko Gempa di Indonesia per Pulau")
+st.title("🌋 Dashboard Risiko Gempa di Indonesia per Pulau")
 
 # Load data hasil
 df = pd.read_csv('outputs/probabilitas_dan_prediksi_magnitudo_per_pulau.csv')
 
 # Sidebar: Filter Pulau
 with st.sidebar:
-    st.markdown("## \\U0001F4CD Filter")
+    st.markdown("## 📍 Filter")
     selected_islands = st.multiselect(
         "Pilih pulau:",
         df['island'].unique(),
@@ -28,7 +28,7 @@ with st.sidebar:
 filtered_df = df[df['island'].isin(selected_islands)]
 
 # TABEL HASIL
-st.subheader("\U0001F4CA Ringkasan Probabilitas & Magnitudo per Pulau")
+st.subheader("📊 Ringkasan Probabilitas & Magnitudo per Pulau")
 st.dataframe(
     filtered_df.style.format({
         'probability_model (%)': '{:.2f}%',
@@ -41,7 +41,7 @@ st.dataframe(
 )
 
 # GRAFIK PROBABILITAS MODEL
-st.markdown("### \\U0001F52E Probabilitas Model")
+st.markdown("### 🔮 Probabilitas Model")
 fig_model = px.bar(filtered_df.sort_values('probability_model (%)', ascending=True),
                    x='probability_model (%)', y='island',
                    orientation='h', color='probability_model (%)',
@@ -49,7 +49,7 @@ fig_model = px.bar(filtered_df.sort_values('probability_model (%)', ascending=Tr
 st.plotly_chart(fig_model, use_container_width=True)
 
 # GRAFIK PROBABILITAS HISTORIS
-st.markdown("### \\U0001F9FE Probabilitas Historis")
+st.markdown("### 🧾 Probabilitas Historis")
 fig_hist = px.bar(filtered_df.sort_values('probability_historis (%)', ascending=True),
                   x='probability_historis (%)', y='island',
                   orientation='h', color='probability_historis (%)',
@@ -57,7 +57,7 @@ fig_hist = px.bar(filtered_df.sort_values('probability_historis (%)', ascending=
 st.plotly_chart(fig_hist, use_container_width=True)
 
 # GRAFIK MAGNITUDO
-st.markdown("### \\U0001F4C8 Rata-Rata Magnitudo: Prediksi vs Historis")
+st.markdown("### 📈  Rata-Rata Magnitudo: Prediksi vs Historis")
 fig_mag = px.bar(filtered_df,
                  x='island',
                  y=['avg_predicted_mag', 'avg_mag'],
@@ -67,7 +67,7 @@ fig_mag = px.bar(filtered_df,
 st.plotly_chart(fig_mag, use_container_width=True)
 
 # PETA INTERAKTIF
-st.subheader("\U0001F5FA\ufe0f Peta Interaktif Risiko Gempa per Pulau")
+st.subheader("🗺️ Peta Interaktif Risiko Gempa per Pulau")
 
 island_coords = {
     'Sumatera': [-0.5, 102], 'Jawa': [-7.0, 111], 'Bali': [-8.34, 115.09],
@@ -137,7 +137,7 @@ legend_html = """
     font-size: 13px;
     color: black;
 ">
-    <b>\U0001F30D Legenda Warna Ikon</b><br>
+    <b>🌍 Legenda Warna Ikon</b><br>
     <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="darkred" /></svg> &nbsp; ≥ 25% (Sangat Tinggi)<br>
     <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="orange" /></svg> &nbsp; 15–24% (Tinggi)<br>
     <svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="green" /></svg> &nbsp; 5–14% (Sedang)<br>
@@ -161,4 +161,4 @@ st_data = st_folium(m, width=700, height=500)
 # Footer
 
 st.markdown("---")
-st.markdown("\U0001F4CD Dibuat oleh: Delastrada Dian Puspita — 2025")
+st.markdown("📍 Dibuat oleh: Delastrada Dian Puspita — 2025")
