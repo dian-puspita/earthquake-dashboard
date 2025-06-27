@@ -10,11 +10,11 @@
 
 ## Fitur Utama
 
-✅ Tabel ringkasan probabilitas dan magnitudo per pulau
-✅ Grafik bar interaktif untuk probabilitas model dan historis
-✅ Perbandingan magnitudo prediksi vs historis
-✅ **Peta interaktif** dengan popup informasi & label probabilitas
-✅ Legenda visual untuk interpretasi warna ikon
+* Tabel ringkasan probabilitas dan magnitudo per pulau
+* Grafik bar interaktif untuk probabilitas model dan historis
+* Perbandingan magnitudo prediksi vs historis
+* **Peta interaktif** dengan popup informasi & label probabilitas
+* Legenda visual untuk interpretasi warna ikon
 
 ---
 
