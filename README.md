@@ -83,9 +83,9 @@ streamlit run app.py
 
 ## Keterkaitan dengan Artikel Ilmiah
 
-📄 Artikel ilmiah terkait:
+Artikel ilmiah terkait:
 **"Random Forest Analysis for Predicting the Probability of Earthquake in Indonesia"**
-📰 Jurnal: *Social Science and Humanities Journal, Vol. 09 (2025)*
+Jurnal: *Social Science and Humanities Journal, Vol. 09 (2025)*
 🔗 [Baca Artikel (Open Access)](https://doi.org/10.18535/sshj.v9i01.1574)
 
 🧩 Penjelasan:
@@ -99,7 +99,7 @@ streamlit run app.py
 
 ---
 
-## 📦 Dataset yang Digunakan
+## Dataset yang Digunakan
 
 File utama: `outputs/probabilitas_dan_prediksi_magnitudo_per_pulau.csv`
 Berisi kolom:
@@ -115,7 +115,7 @@ Berisi kolom:
 
 ---
 
-## 📍 Visualisasi Peta
+## Visualisasi Peta
 
 * Dibangun menggunakan `Folium`
 * Menampilkan:
@@ -132,7 +132,7 @@ Berisi kolom:
 
 ---
 
-## 📚 Ketergantungan
+## Ketergantungan
 
 | Library            | Fungsi                                |
 | ------------------ | ------------------------------------- |
@@ -144,7 +144,7 @@ Berisi kolom:
 
 ---
 
-## ⚖️ Lisensi
+## Lisensi
 
 Proyek ini untuk keperluan edukasi dan penelitian.
 Lisensi: [MIT License](LICENSE)
