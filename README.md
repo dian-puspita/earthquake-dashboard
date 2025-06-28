@@ -88,7 +88,7 @@ Artikel ilmiah terkait:
 Jurnal: *Social Science and Humanities Journal, Vol. 09 (2025)*
 🔗 [Baca Artikel (Open Access)](https://doi.org/10.18535/sshj.v9i01.1574)
 
-🧩 Penjelasan:
+Penjelasan:
 
 * Dalam artikel ilmiah, **Random Forest digunakan untuk memprediksi magnitudo gempa (regresi)**.
 * Pada dashboard ini, **probabilitas gempa per pulau** ditampilkan menggunakan:
