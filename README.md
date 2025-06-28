@@ -1,113 +1,154 @@
+```markdown
 # 🌋 Earthquake Risk Dashboard – Indonesia
 
-**Dashboard interaktif berbasis Streamlit** untuk memvisualisasikan **probabilitas gempa bumi di Indonesia** berdasarkan data historis dan hasil prediksi model machine learning.
+🔗 **[Demo Langsung – Streamlit App](https://earthquake-dashboard.streamlit.app/)**
 
-> Dibuat oleh: **Delastrada Dian Puspita** – 2025
-> Dataset: BMKG dan data turunan hasil pemodelan
+**Dashboard interaktif berbasis Streamlit** untuk memvisualisasikan **probabilitas dan magnitudo gempa bumi di Indonesia** berdasarkan data historis dan hasil prediksi model machine learning.
+
+> Dibuat oleh: **Delastrada Dian Puspita** – 2025  
+> Dataset: BMKG (2015–2023) dan data turunan hasil pemodelan  
 > Tools: `Python`, `Streamlit`, `Folium`, `Plotly`, `scikit-learn`
 
 ---
 
-## Fitur Utama
+## Tujuan
 
-* Tabel ringkasan probabilitas dan magnitudo per pulau
-* Grafik bar interaktif untuk probabilitas model dan historis
-* Perbandingan magnitudo prediksi vs historis
-* **Peta interaktif** dengan popup informasi & label probabilitas
-* Legenda visual untuk interpretasi warna ikon
+Proyek ini bertujuan untuk:
+
+- Memprediksi **rata-rata magnitudo** gempa berdasarkan lokasi (`latitude`, `longitude`, `depth`)
+- Menghitung **probabilitas kejadian gempa** di setiap pulau besar di Indonesia melalui dua pendekatan:
+  - **Random Forest Classifier** (prediksi probabilitas berdasarkan model)
+  - **Perhitungan historis** (proporsi frekuensi gempa per pulau)
 
 ---
 
 ## Struktur Proyek
 
 ```
+
 earthquake-dashboard/
 │
 ├── app.py                             # Aplikasi Streamlit utama
 ├── outputs/
-│   └── probabilitas_dan_prediksi_magnitudo_per_pulau.csv
+│   └── probabilitas\_dan\_prediksi\_magnitudo\_per\_pulau.csv
 │
-├── models/                            # (opsional) folder model .pkl jika dibutuhkan
-│
+├── models/                            # (opsional) model RF pickle
 ├── requirements.txt                   # Daftar library Python
 └── README.md                          # Dokumentasi proyek ini
-```
+
+````
 
 ---
 
 ## Cara Menjalankan
 
-### 1. Clone repositori
-
 ```bash
+# Clone repo
 git clone https://github.com/dian-puspita/earthquake-dashboard.git
 cd earthquake-dashboard
-```
 
-### 2. Buat dan aktifkan environment (opsional)
-
-```bash
+# (Opsional) Buat environment
 python -m venv venv
-source venv/bin/activate      # Linux/macOS
-venv\Scripts\activate         # Windows
-```
+venv\Scripts\activate  # Windows
 
-### 3. Install dependencies
-
-```bash
+# Install dependensi
 pip install -r requirements.txt
-```
 
-### 4. Jalankan aplikasi Streamlit
-
-```bash
+# Jalankan Streamlit
 streamlit run app.py
-```
+````
 
 ---
 
-## Tentang Dataset
+## Fitur Utama
 
-File CSV yang digunakan:
-`outputs/probabilitas_dan_prediksi_magnitudo_per_pulau.csv`
+* Tabel ringkasan probabilitas & magnitudo per pulau
+* Grafik bar interaktif (probabilitas model vs historis)
+* Perbandingan magnitudo prediksi vs historis
+* **Peta interaktif**: label & ikon warna sesuai risiko
+* Legenda visual untuk interpretasi risiko gempa
 
+---
+
+## Penjelasan Metodologi
+
+* `Random Forest Regressor`: memprediksi magnitudo dari fitur spasial
+* `Random Forest Classifier`: estimasi probabilitas gempa berdasarkan fitur input
+* **Probabilitas Historis** dihitung manual:
+
+  ```
+  Probabilitas (%) = (Jumlah Gempa di Pulau X / Total Seluruh Gempa) × 100%
+  ```
+
+---
+
+## Keterkaitan dengan Artikel Ilmiah
+
+📄 Artikel ilmiah terkait:
+**"Random Forest Analysis for Predicting the Probability of Earthquake in Indonesia"**
+📰 Jurnal: *Social Science and Humanities Journal, Vol. 09 (2025)*
+🔗 [Baca Artikel (Open Access)](https://doi.org/10.18535/sshj.v9i01.1574)
+
+🧩 Penjelasan:
+
+* Dalam artikel ilmiah, **Random Forest digunakan untuk memprediksi magnitudo gempa (regresi)**.
+* Pada dashboard ini, **probabilitas gempa per pulau** ditampilkan menggunakan:
+
+  * Hasil klasifikasi (model)
+  * Frekuensi historis
+* Visualisasi pada dashboard merupakan perluasan dari hasil ilmiah tersebut.
+
+---
+
+## 📦 Dataset yang Digunakan
+
+File utama: `outputs/probabilitas_dan_prediksi_magnitudo_per_pulau.csv`
 Berisi kolom:
 
-* `island`: Nama pulau
-* `probability_model (%)`: Probabilitas gempa berdasarkan model (Random Forest)
-* `probability_historis (%)`: Probabilitas berdasarkan frekuensi historis
-* `avg_predicted_mag`: Rata-rata magnitudo hasil prediksi
-* `avg_mag`: Rata-rata magnitudo historis
-* `freq`: Jumlah kejadian gempa historis
+| Kolom                      | Keterangan                                    |
+| -------------------------- | --------------------------------------------- |
+| `island`                   | Nama pulau                                    |
+| `probability_model (%)`    | Probabilitas model (Random Forest Classifier) |
+| `probability_historis (%)` | Probabilitas dari data historis               |
+| `avg_predicted_mag`        | Prediksi magnitudo rata-rata (Random Forest)  |
+| `avg_mag`                  | Rata-rata magnitudo historis                  |
+| `freq`                     | Jumlah gempa historis                         |
 
 ---
 
-## Visualisasi Peta
+## 📍 Visualisasi Peta
 
-* Peta menggunakan **Folium** (leaflet.js).
-* Setiap pulau diberi:
+* Dibangun menggunakan `Folium`
+* Menampilkan:
 
-  * **Label angka**: menampilkan nilai probabilitas model
-  * **Ikon berwarna**: menunjukkan tingkat risiko gempa (warna tergantung probabilitas)
-  * **Popup**: menampilkan detail lengkap per pulau
-* Legenda di bagian kiri bawah membantu interpretasi warna ikon.
+  * Label angka (nilai probabilitas)
+  * Ikon warna berdasarkan tingkat risiko
+  * Popup informasi per pulau
+* Legenda visual membantu interpretasi tingkat risiko:
 
----
-
-## Ketergantungan
-
-| Library            | Fungsi                                       |
-| ------------------ | -------------------------------------------- |
-| `streamlit`        | UI web app dashboard                         |
-| `pandas`           | Manipulasi data CSV                          |
-| `folium`           | Peta interaktif berbasis leaflet             |
-| `plotly.express`   | Grafik interaktif (bar chart, grouped chart) |
-| `streamlit-folium` | Integrasi peta Folium di Streamlit           |
+  * 🔴 Sangat Tinggi ≥ 25%
+  * 🟠 Tinggi 15–24%
+  * 🟢 Sedang 5–14%
+  * 🔵 Rendah < 5%
 
 ---
 
-## Lisensi
+## 📚 Ketergantungan
 
-Proyek ini untuk keperluan edukasi dan penelitian. Silakan gunakan, modifikasi, dan kembangkan sesuai kebutuhan.
+| Library            | Fungsi                                |
+| ------------------ | ------------------------------------- |
+| `streamlit`        | UI dashboard web                      |
+| `pandas`           | Manipulasi data                       |
+| `plotly.express`   | Visualisasi grafik interaktif         |
+| `folium`           | Peta interaktif                       |
+| `streamlit-folium` | Integrasi peta ke dashboard Streamlit |
 
 ---
+
+## ⚖️ Lisensi
+
+Proyek ini untuk keperluan edukasi dan penelitian.
+Lisensi: [MIT License](LICENSE)
+
+Silakan gunakan, modifikasi, dan kembangkan proyek ini sesuai kebutuhan.
+Mohon tetap mencantumkan atribusi yang sesuai.
