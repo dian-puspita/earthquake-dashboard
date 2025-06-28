@@ -1,4 +1,3 @@
-```markdown
 # 🌋 Earthquake Risk Dashboard – Indonesia
 
 🔗 **[Demo Langsung – Streamlit App](https://earthquake-dashboard.streamlit.app/)**
