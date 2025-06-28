@@ -1,6 +1,6 @@
 # 🌋 Earthquake Risk Dashboard – Indonesia
 
-🔗 **[Demo Langsung – Streamlit App](https://earthquake-dashboard.streamlit.app/)**
+🔗 **[Demo Langsung – Streamlit App](https://earthquake-dashboard-dian-puspita.streamlit.app/)**
 
 **Dashboard interaktif berbasis Streamlit** untuk memvisualisasikan **probabilitas dan magnitudo gempa bumi di Indonesia** berdasarkan data historis dan hasil prediksi model machine learning.
 
